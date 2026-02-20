@@ -25,7 +25,7 @@ ParadeDB의 BM25 검색 엔진(pg_search)이 한글 텍스트에 대해 PostgreS
 ## 사용법
 
 ```bash
-> brew install --cask docker(앱 설치후 docker 앱을 실행)
+> brew install --cask docker(앱 설치 언되었을 경우 설치 후 docker 앱을 실행)
 
 # 구동
 > docker compose up -d
