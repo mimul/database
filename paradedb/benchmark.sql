@@ -261,11 +261,11 @@ EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스
 
 \echo ''
 \echo '--- PostgreSQL LIKE: 디지털 트랜스포메이션 × 5회 ---'
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
 
 -- -------------------------------------------------------
 -- 9) Facet Aggregation（BM25 부가 기능）
