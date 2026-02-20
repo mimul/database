@@ -147,7 +147,7 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title, pdb.score(id) AS score
 FROM articles
-WHERE body &&& '신재생에너지 기술혁신'
+WHERE body &&& '신재생에너지기술혁신'
 ORDER BY score DESC
 LIMIT 10;
 
@@ -231,7 +231,7 @@ LIMIT 10;
 \echo '--- ParadeDB: 점수가 있는 검색 결과 ---'
 SELECT id, title, pdb.score(id) AS relevance_score
 FROM articles
-WHERE body ||| '사이버 보안'
+WHERE body ||| '사이버보안'
 ORDER BY relevance_score DESC
 LIMIT 5;
 
@@ -253,19 +253,19 @@ LIMIT 5;
 
 \echo ''
 \echo '--- ParadeDB BM25: 디지털 트랜스포메이션 × 5회---'
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털 트랜스포메이션';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털 트랜스포메이션';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털 트랜스포메이션';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털 트랜스포메이션';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털 트랜스포메이션';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스포메이션';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스포메이션';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스포메이션';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스포메이션';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body ||| '디지털트랜스포메이션';
 
 \echo ''
 \echo '--- PostgreSQL LIKE: 디지털 트랜스포메이션 × 5회 ---'
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털트랜스포메이션%';
 
 -- -------------------------------------------------------
 -- 9) Facet Aggregation（BM25 부가 기능）
