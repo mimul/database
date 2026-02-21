@@ -6,7 +6,7 @@
 
 -- 병렬 작업자를 비활성화하여 정확한 실행 시간을 측정(병렬 작업자의 시작 오버 헤드가 벤치 마크 결과를 왜곡하는 것을 방지)
 SET max_parallel_workers_per_gather = 0;
-
+SET default_text_search_config = 'korean';
 -- ============================================================
 -- STEP 1: 인덱스
 -- ============================================================
@@ -29,11 +29,11 @@ DROP INDEX IF EXISTS trgm_body_idx;
 CREATE INDEX trgm_title_idx ON articles USING gin (title gin_trgm_ops);
 CREATE INDEX trgm_body_idx ON articles USING gin (body gin_trgm_ops);
 
--- 3) PostgreSQL GIN tsvector 색인(simple 사전 - 한글용 임베디드 사전이 없기 때문에)
+-- 3) PostgreSQL GIN tsvector 색인(korean 사전)
 DROP INDEX IF EXISTS ts_title_idx;
 DROP INDEX IF EXISTS ts_body_idx;
-CREATE INDEX ts_title_idx ON articles USING gin (to_tsvector('simple', title));
-CREATE INDEX ts_body_idx ON articles USING gin (to_tsvector('simple', body));
+CREATE INDEX ts_title_idx ON articles USING gin (to_tsvector('korean', title));
+CREATE INDEX ts_body_idx ON articles USING gin (to_tsvector('korean', body));
 
 -- ANALYZE
 ANALYZE articles;
@@ -80,8 +80,8 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '인공지능')
-   OR to_tsvector('simple', body) @@ to_tsquery('simple', '인공지능')
+WHERE to_tsvector('korean', title) @@ to_tsquery('korean', '인공지능')
+   OR to_tsvector('korean', body) @@ to_tsquery('korean', '인공지능')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -114,8 +114,8 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '기계학습')
-   OR to_tsvector('simple', body) @@ to_tsquery('simple', '기계학습')
+WHERE to_tsvector('korean', title) @@ to_tsquery('korean', '기계학습')
+   OR to_tsvector('korean', body) @@ to_tsquery('korean', '기계학습')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -148,8 +148,8 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '환경문제')
-   OR to_tsvector('simple', body) @@ to_tsquery('simple', '환경문제')
+WHERE to_tsvector('korean', title) @@ to_tsquery('korean', '환경문제')
+   OR to_tsvector('korean', body) @@ to_tsquery('korean', '환경문제')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -182,8 +182,8 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '신재생에너지')
-   AND to_tsvector('simple', body) @@ to_tsquery('simple', '기술혁신')
+WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '신재생에너지')
+   AND to_tsvector('korean', body) @@ to_tsquery('korean', '기술혁신')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -225,7 +225,7 @@ LIMIT 10;
 \echo '--- PostgreSQL tsvector 달리기 검색 ---'
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '달리기')
+WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '달리기')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -303,11 +303,11 @@ EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜
 
 \echo ''
 \echo '--- ParadeDB tsvector: 디지털트랜스포메이션 × 5회---'
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '디지털트랜스포메이션');
 
 -- -------------------------------------------------------
 -- 9) Facet Aggregation（BM25 부가 기능）
