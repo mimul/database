@@ -63,7 +63,7 @@ SELECT '기계학습을활용한이미지인식'::pdb.lindera(korean)::text[];
 EXPLAIN ANALYZE
 SELECT id, title, pdb.score(id) AS score
 FROM articles
-WHERE title ||| '인공지능' OR body ||| '인공지능'
+WHERE title ||| 'AI' OR body ||| '인공지능'
 ORDER BY score DESC
 LIMIT 10;
 
@@ -182,8 +182,7 @@ LIMIT 10;
 EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '신재생에너지')
-   AND to_tsvector('korean', body) @@ to_tsquery('korean', '기술혁신')
+WHERE to_tsvector('korean', body) @@ to_tsquery('korean', '신재생에너지 & 기술혁신')
 LIMIT 10;
 
 -- -------------------------------------------------------
