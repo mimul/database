@@ -223,10 +223,9 @@ LIMIT 10;
 
 \echo ''
 \echo '--- PostgreSQL tsvector 달리기 검색 ---'
-EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
-WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '달리기')
+WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '달리기')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -304,11 +303,11 @@ EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜
 
 \echo ''
 \echo '--- ParadeDB tsvector: 디지털트랜스포메이션 × 5회---'
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
-EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털트랜스포메이션');
 
 -- -------------------------------------------------------
 -- 9) Facet Aggregation（BM25 부가 기능）
