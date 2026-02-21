@@ -109,6 +109,15 @@ FROM articles
 WHERE title LIKE '%기계학습%' OR body LIKE '%기계학습%'
 LIMIT 10;
 
+\echo ''
+\echo '--- PostgreSQL tsvector 검색 ---'
+EXPLAIN ANALYZE
+SELECT id, title
+FROM articles
+WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '기계학습')
+   OR to_tsvector('simple', body) @@ to_tsquery('simple', '기계학습')
+LIMIT 10;
+
 -- -------------------------------------------------------
 -- 3) 환경문제 검색
 -- -------------------------------------------------------
@@ -134,6 +143,15 @@ FROM articles
 WHERE title LIKE '%환경문제%' OR body LIKE '%환경문제%'
 LIMIT 10;
 
+\echo ''
+\echo '--- PostgreSQL tsvector 검색 ---'
+EXPLAIN ANALYZE
+SELECT id, title
+FROM articles
+WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '환경문제')
+   OR to_tsvector('simple', body) @@ to_tsquery('simple', '환경문제')
+LIMIT 10;
+
 -- -------------------------------------------------------
 -- 4) 복합 검색 - 신재생에너지 기술 혁신
 -- -------------------------------------------------------
@@ -157,6 +175,15 @@ EXPLAIN ANALYZE
 SELECT id, title
 FROM articles
 WHERE body LIKE '%신재생에너지%' AND body LIKE '%기술혁신%'
+LIMIT 10;
+
+\echo ''
+\echo '--- PostgreSQL tsvector 검색(AND) ---'
+EXPLAIN ANALYZE
+SELECT id, title
+FROM articles
+WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '신재생에너지')
+   AND to_tsvector('simple', body) @@ to_tsquery('simple', '기술혁신')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -192,6 +219,14 @@ LIMIT 10;
 SELECT id, title
 FROM articles
 WHERE body LIKE '%달리다%'
+LIMIT 10;
+
+\echo ''
+\echo '--- PostgreSQL tsvector 달리기 검색 ---'
+EXPLAIN ANALYZE
+SELECT id, title
+FROM articles
+WHERE to_tsvector('simple', title) @@ to_tsquery('simple', '달리기')
 LIMIT 10;
 
 -- -------------------------------------------------------
@@ -266,6 +301,14 @@ EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜
 EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
 EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
 EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE body LIKE '%디지털 트랜스포메이션%';
+
+\echo ''
+\echo '--- ParadeDB tsvector: 디지털트랜스포메이션 × 5회---'
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
+EXPLAIN ANALYZE SELECT count(*) FROM articles WHERE to_tsvector('simple', body) @@ to_tsquery('simple', '디지털 트랜스포메이션');
 
 -- -------------------------------------------------------
 -- 9) Facet Aggregation（BM25 부가 기능）
