@@ -63,7 +63,7 @@ SELECT '기계학습을활용한이미지인식'::pdb.lindera(korean)::text[];
 EXPLAIN ANALYZE
 SELECT id, title, pdb.score(id) AS score
 FROM articles
-WHERE title ||| 'AI' OR body ||| '인공지능'
+WHERE title ||| '인공지능' OR body ||| '인공지능'
 ORDER BY score DESC
 LIMIT 10;
 
